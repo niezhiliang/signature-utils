@@ -16,7 +16,7 @@ import java.io.*;
  * @Email nzlsgg@163.com
  * @Date 2018/12/10 上午9:54
  */
-public class SignUtils {
+public class SealUtils {
     /**
      * 默认从10x10的位置开始画，防止左上部分画布装不下
      */
@@ -246,7 +246,7 @@ public class SignUtils {
      *
      * @throws Exception 异常
      */
-    public static BufferedImage buildSeal(SealConfiguration conf) throws Exception {
+    private static BufferedImage buildSeal(SealConfiguration conf) throws Exception {
 
         //1.画布
         BufferedImage bi = new BufferedImage(conf.getImageSize(), conf.getImageSize(), BufferedImage.TYPE_4BYTE_ABGR);
@@ -399,7 +399,7 @@ public class SignUtils {
      *
      * @throws IOException 异常
      */
-    public static byte[] buildBytes(BufferedImage image) throws Exception {
+    private static byte[] buildBytes(BufferedImage image) throws Exception {
 
         ByteArrayOutputStream outStream = new ByteArrayOutputStream();
             //bufferedImage转为byte数组
@@ -492,7 +492,7 @@ public class SignUtils {
          */
         configuration.setBorderCircle(new SealCircle(4, 140, 100));
 
-        return SignUtils.buildAndStoreSeal(configuration);
+        return SealUtils.buildAndStoreSeal(configuration);
 
     }
 
@@ -575,7 +575,7 @@ public class SignUtils {
          */
         configuration.setBorderCircle(new SealCircle(4, 115, 115));
 
-        return SignUtils.buildAndStoreSeal(configuration);
+        return SealUtils.buildAndStoreSeal(configuration);
     }
 
     public static void main(String[] args) {
