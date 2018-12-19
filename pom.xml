@@ -10,6 +10,15 @@
         <version>2.0.2.RELEASE</version>
     </parent>
 
+
+    <name>signature-utils</name>
+    <url>http://maven.apache.org</url>
+    <description>圆形 椭圆公章生成</description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
     <groupId>com.niezhiliang.signature.utils</groupId>
     <artifactId>signature-utils</artifactId>
     <version>1.0.0</version>
@@ -22,30 +31,109 @@
         </dependency>
     </dependencies>
 
+    <developers>
+        <developer>
+            <name>Niezhiliang</name>
+            <id>niezhiliang</id>
+            <email>nzlsgg@163.com</email>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>+8</timezone>
+        </developer>
+    </developers>
+
     <build>
         <plugins>
-        <plugin>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-maven-plugin</artifactId>
-        </plugin>
-        <plugin>
-            <groupId>com.spotify</groupId>
-            <artifactId>docker-maven-plugin</artifactId>
-            <version>1.0.0</version>
-            <configuration>
-                <imageName>suyu/${project.artifactId}:${project.version}</imageName>
-                <baseImage>java:8</baseImage>
-                <entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
-                <resources>
-                    <resource>
-                        <targetPath>/</targetPath>
-                        <directory>${project.build.directory}</directory>
-                        <include>${project.build.finalName}.jar</include>
-                    </resource>
-                </resources>
-            </configuration>
-        </plugin>
-    </plugins>
-</build>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.3</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.2</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.3</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration> <!-- add this to disable checking -->
+                            <additionalparam>-Xdoclint:none</additionalparam>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    <licenses>
+        <license>
+            <name>GNU General Public License v3.0</name>
+            <url>http://www.gnu.org/licenses/agpl-3.0.html</url>
+            <distribution>repo</distribution>
+            <comments>A socket manager</comments>
+        </license>
+    </licenses>
+    <scm>
+        <connection>scm:git://https://github.com/niezhiliang/signature-utils.git</connection>
+        <developerConnection>scm:git:https://github.com/niezhiliang/signature-utils.git</developerConnection>
+        <url>https://github.com/niezhiliang/signature-utils</url>
+        <tag>v${project.version}</tag>
+    </scm>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <name>Maven Central Staging Repository</name>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
 
 </project>
