@@ -39,7 +39,7 @@ public class IndexController {
                 break;
             default:
                 try {
-                    base64 = SealUtils.companyEllipseSeal("浙江某某某网络集团有限公司",0,1,"1234567899876","XX专用");
+                    base64 = SealUtils.companyEllipseSeal("浙江某某某网络集团有限公司",0,0,"1234567899876","XX专用");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
