@@ -1,4 +1,4 @@
-package com.niezhiliang.signatured.utils;
+package com.niezhiliang.signature.utils;
 
 import java.awt.*;
 
