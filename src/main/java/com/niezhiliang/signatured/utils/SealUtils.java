@@ -1,4 +1,4 @@
-package com.niezhiliang.signature.utils;
+package com.niezhiliang.signatured.utils;
 
 
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -581,7 +581,7 @@ public class SealUtils {
     public static void main(String[] args) {
         try {
             //System.out.println(companyEllipseSeal("浙江葫芦娃网络集团有限公司",1,2,"1234567899876","合同专用章"));
-            System.out.println(companyCircleSeal("浙江葫芦娃网络集团有限公司哈哈哈哈撒地方",1,2,"",""));
+            System.out.println(companyEllipseSeal("浙江葫芦娃网络集团有限公司哈哈哈哈撒地方",1,2,"",""));
         } catch (Exception e) {
             e.printStackTrace();
         }
