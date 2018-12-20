@@ -1,5 +1,7 @@
 ## Java版本的公章生成使用说明
 
+##### 使用Canvas生成公章项目地址：https://github.com/niezhiliang/canvas-draw-seal
+
 该项目已经发布到Maven中央仓库，使用只需要在pom文件中依赖就好
 
 ```java
@@ -59,4 +61,7 @@
     String base64 = SealUtils.companyEllipseSeal("浙江某某某网络集团有限公司",0,0,"XX专用","1234567899876");
 ```
 ![演示图片](https://github.com/niezhiliang/signature-utils/blob/master/imgs/%E5%AE%8B%E4%BD%93.png)
+
+
+
 
