@@ -30,7 +30,7 @@
    * 
    * return :返回是生成签章图片的base64
    **/
-    String base64 = SealUtils.companyCircleSeal("浙江杭州江干下沙某某某网络集团有限公司",0,0,"XX专用","1234567899876");
+    String base64 = SealUtils.companyCircleSeal("浙江杭州江干下沙某某某网络集团有限公司",0,0,"1234567899876","合同专用");
 ```
 
 ![演示图片](https://github.com/niezhiliang/signature-utils/blob/master/imgs/%E9%BB%91%E4%BD%93.png)
@@ -58,7 +58,7 @@
    * 
    * return :返回是生成签章图片的base64
    **/
-    String base64 = SealUtils.companyEllipseSeal("浙江某某某网络集团有限公司",0,0,"XX专用","1234567899876");
+    String base64 = SealUtils.companyEllipseSeal("浙江某某某网络集团有限公司",0,0,"1234567899876","XX专用");
 ```
 ![演示图片](https://github.com/niezhiliang/signature-utils/blob/master/imgs/%E5%AE%8B%E4%BD%93.png)
 
