@@ -8,7 +8,7 @@
     <dependency>
         <groupId>com.niezhiliang.signature.utils</groupId>
         <artifactId>signature-utils</artifactId>
-        <version>1.1.0</version>
+        <version>1.2.0</version>
     </dependency>
 
 ```
@@ -23,14 +23,14 @@
 ```java
   /*
    * companyName：签章文字 签章主文字 默认字体大小30 如果输入文字多余15字 则字体会自动缩小为23
-   * color：公章及字体颜色 0.红色 1.蓝色 2.黑色 不是传入012 则默认红色
-   * font：公章字体 0.宋体 1.方正黑体 2. 楷体  不是传入012 则默认宋体
+   * color：公章及字体颜色 ColorEnum.RED ColorEnum.BLUE ColorEnum.BLACK 
+   * font：公章字体 FontEnum.SONGTI FontEnum.FANGZHENGHEITI FontEnum.KAITI 
    * serNo 签章的下弦文 公章编号 效果最佳：3-13位，如果不需要绘制下弦文则传null 或者 ""
    * title 签章副文字，如果不需要绘制下弦文则传null 或者 "" 最多八个字符，多于八个字符会覆盖掉主文字
    * 
    * return :返回是生成签章图片的base64
    **/
-    String base64 = SealUtils.companyCircleSeal("浙江杭州江干下沙某某某网络集团有限公司",0,0,"1234567899876","合同专用");
+    String base64 = SealUtils.companyCircleSeal("浙江杭州江干下沙某某某网络集团有限公司",ColorEnum.RED,FontEnum.SONGTI,"1234567899876","合同专用");
 ```
 
 ![演示图片](https://github.com/niezhiliang/signature-utils/blob/master/imgs/%E9%BB%91%E4%BD%93.png)
@@ -51,14 +51,14 @@
 ```java
   /*
    * companyName：签章文字 签章主文字 默认字体大小30 如果输入文字多余15字 则字体会自动缩小为23
-   * color：公章及字体颜色 0.红色 1.蓝色 2.黑色 不是传入012 则默认红色
-   * font：公章字体 0.宋体 1.方正黑体 2. 楷体  不是传入012 则默认宋体
+   * color：公章及字体颜色 ColorEnum.RED ColorEnum.BLUE ColorEnum.BLACK 
+   * font：公章字体 FontEnum.SONGTI FontEnum.FANGZHENGHEITI FontEnum.KAITI 
    * serNo 签章的下弦文 公章编号 效果最佳：3-13位，如果不需要绘制下弦文则传null 或者 ""
    * title 签章副文字，如果不需要绘制下弦文则传null 或者 "" 最多八个字符，多于八个字符会覆盖掉主文字
    * 
    * return :返回是生成签章图片的base64
    **/
-    String base64 = SealUtils.companyEllipseSeal("浙江某某某网络集团有限公司",0,0,"1234567899876","XX专用");
+    String base64 = SealUtils.companyEllipseSeal("浙江某某某网络集团有限公司",ColorEnum.RED,FontEnum.SONGTI,"1234567899876","XX专用");
 ```
 ![演示图片](https://github.com/niezhiliang/signature-utils/blob/master/imgs/%E5%AE%8B%E4%BD%93.png)
 

@@ -1,6 +1,8 @@
 package com.niezhiliang.signature.utils;
 
 
+import com.niezhiliang.signature.utils.constant.ColorEnum;
+import com.niezhiliang.signature.utils.constant.FontEnum;
 import org.apache.tomcat.util.codec.binary.Base64;
 
 import javax.imageio.ImageIO;
@@ -21,10 +23,6 @@ public class SealUtils {
      * 默认从10x10的位置开始画，防止左上部分画布装不下
      */
     private final static int INIT_BEGIN = 10;
-
-    private final static Color [] colors = {Color.RED,Color.BLUE,Color.BLACK};
-
-    private final static String [] fonts = {"宋体","方正黑体","楷体"};
 
     /**
      * 绘制圆弧形文字
@@ -227,7 +225,7 @@ public class SealUtils {
 
             if (isTop) {
                 affineTransform.rotate(Math.toRadians((fxang * 180.0 / Math.PI - 90)), 0, 0);
-                System.out.println("i:"+i + " ---" +(Math.toRadians((fxang * 180.0 / Math.PI - 90))));
+                //System.out.println("i:"+i + " ---" +(Math.toRadians((fxang * 180.0 / Math.PI - 90))));
             }
 
             else
@@ -408,19 +406,17 @@ public class SealUtils {
         }
 
     /**
-     *
+     * 绘制椭圆公章
      * @param companyName 15字以内体验较佳多余15字 字体会变小
-     * @param color 0 红色 1.蓝色 2.蓝色
-     * @param font 0.宋体 1.方正黑体 2.楷体
+     * @param colorEnum  红色 蓝色 蓝色
+     * @param fontEnum 宋体 方正黑体 楷体
      * @param serNo 最少4位最多20位
      * @param title 最多8位
      * @return
      * @throws Exception
      */
-    public static String companyEllipseSeal(String companyName,int color,int font,String serNo,String title) throws Exception {
+    public static String companyEllipseSeal(String companyName,ColorEnum colorEnum, FontEnum fontEnum,String serNo,String title) throws Exception {
 
-        String fontFaiily = font >= 0 && font < fonts.length ? fonts[font] : fonts[0];
-        Color backgroudColor = color >= 0 && color < colors.length ? colors[color] : colors[0];
 
         SealConfiguration configuration = new SealConfiguration();
         /**
@@ -428,7 +424,7 @@ public class SealUtils {
          */
         SealFont mainFont = new SealFont();
         mainFont.setBold(true);
-        mainFont.setFontFamily(fontFaiily);
+        mainFont.setFontFamily(fontEnum.getFont());
         mainFont.setMarginSize(10);
         /**************************************************/
         mainFont.setFontText(companyName);
@@ -448,7 +444,7 @@ public class SealUtils {
         if (serNo != null && !"".equals(serNo)) {
             SealFont viceFont = new SealFont();
             viceFont.setBold(true);
-            viceFont.setFontFamily(fontFaiily);
+            viceFont.setFontFamily(fontEnum.getFont());
             viceFont.setMarginSize(5);
             /**************************************************/
             viceFont.setFontText(serNo);
@@ -466,7 +462,7 @@ public class SealUtils {
         if (title != null && !"".equals(title)) {
             SealFont titleFont = new SealFont();
             titleFont.setBold(true);
-            titleFont.setFontFamily(fontFaiily);
+            titleFont.setFontFamily(fontEnum.getFont());
             titleFont.setFontSize(22);
             if (companyName.length() > 14) {
                 titleFont.setFontSize(20);
@@ -486,7 +482,7 @@ public class SealUtils {
         /**
          * 背景颜色
          */
-        configuration.setBackgroudColor(backgroudColor);
+        configuration.setBackgroudColor(colorEnum.getColor());
         /**
          * 边线粗细、半径
          */
@@ -496,11 +492,17 @@ public class SealUtils {
 
     }
 
-
-    public static String companyCircleSeal(String companyName,int color,int font,String serNo,String title) throws Exception {
-
-        String fontFaiily = font >= 0 && font < fonts.length ? fonts[font] : fonts[0];
-        Color backgroudColor = color >= 0 && color < colors.length ? colors[color] : colors[0];
+    /**
+     * 绘制圆形公章
+     * @param companyName
+     * @param colorEnum
+     * @param fontEnum
+     * @param serNo
+     * @param title
+     * @return
+     * @throws Exception
+     */
+    public static String companyCircleSeal(String companyName,ColorEnum colorEnum, FontEnum fontEnum, String serNo, String title) throws Exception {
 
         SealConfiguration configuration = new SealConfiguration();
         /**
@@ -508,7 +510,7 @@ public class SealUtils {
          */
         SealFont mainFont = new SealFont();
         mainFont.setBold(true);
-        mainFont.setFontFamily(fontFaiily);
+        mainFont.setFontFamily(fontEnum.getFont());
         mainFont.setMarginSize(5);
         mainFont.setFontText(companyName);
         mainFont.setFontSize(30);
@@ -525,7 +527,7 @@ public class SealUtils {
          */
         if (serNo != null && !"".equals(serNo)) {
             SealFont viceFont = new SealFont();
-            viceFont.setFontFamily(fontFaiily);
+            viceFont.setFontFamily(fontEnum.getFont());
             viceFont.setMarginSize(-5);
             /**************************************************/
             viceFont.setFontText(serNo);
@@ -542,7 +544,7 @@ public class SealUtils {
          */
         SealFont centerFont = new SealFont();
         centerFont.setBold(false);
-        centerFont.setFontFamily(fontFaiily);
+        centerFont.setFontFamily(fontEnum.getFont());
         centerFont.setFontText("★");
         centerFont.setFontSize(70);
 
@@ -554,7 +556,7 @@ public class SealUtils {
         if (title != null && !"".equals(title)) {
             SealFont titleFont = new SealFont();
             titleFont.setBold(true);
-            titleFont.setFontFamily(fontFaiily);
+            titleFont.setFontFamily(fontEnum.getFont());
             titleFont.setFontSize(20);
             titleFont.setFontText(title);
             titleFont.setMarginSize(70);
@@ -569,7 +571,7 @@ public class SealUtils {
         /**
          * 背景颜色
          */
-        configuration.setBackgroudColor(backgroudColor);
+        configuration.setBackgroudColor(colorEnum.getColor());
         /**
          * 边线粗细、半径
          */
@@ -578,13 +580,13 @@ public class SealUtils {
         return SealUtils.buildAndStoreSeal(configuration);
     }
 
-    public static void main(String[] args) {
-        try {
-            //System.out.println(companyEllipseSeal("浙江葫芦娃网络集团有限公司",1,2,"1234567899876","合同专用章"));
-            System.out.println(companyEllipseSeal("浙江葫芦娃网络集团有限公司哈哈哈哈撒地方",1,2,"",""));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    public static void main(String[] args) {
+//        try {
+//            //System.out.println(companyEllipseSeal("浙江葫芦娃网络集团有限公司",1,2,"1234567899876","合同专用章"));
+//            System.out.println(companyEllipseSeal("浙江葫芦娃网络集团有限公司哈哈哈哈撒地方",ColorEnum.RED,FontEnum.SONGTI,"123456789987","合同专用章"));
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
 }
