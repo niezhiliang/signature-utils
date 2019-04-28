@@ -1,4 +1,4 @@
-package com.niezhiliang.signature.utils;
+package com.niezhiliang.signature.utils.entity;
 
 /**
  * @Description: 印章圆圈类

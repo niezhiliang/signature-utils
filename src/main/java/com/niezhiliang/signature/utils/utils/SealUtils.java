@@ -1,9 +1,9 @@
-package com.niezhiliang.signature.utils;
+package com.niezhiliang.signature.utils.utils;
 
 
-import com.niezhiliang.signature.utils.constant.ColorEnum;
-import com.niezhiliang.signature.utils.constant.FontEnum;
-import org.apache.tomcat.util.codec.binary.Base64;
+import com.niezhiliang.signature.utils.entity.SealCircle;
+import com.niezhiliang.signature.utils.entity.SealConfiguration;
+import com.niezhiliang.signature.utils.entity.SealFont;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -11,7 +11,9 @@ import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.Base64;
 
 /**
  * @Author NieZhiLiang
@@ -149,8 +151,9 @@ public class SealUtils {
 
         //5.总的角跨度
         float totalArcAng = 180;//(float) (font.getFontSpace() * fontTextLen);
-        if (!isTop)
+        if (!isTop) {
             totalArcAng = 120;
+        }
 
         //6.从边线向中心的移动因子
         float minRat = 0.90f;
@@ -177,7 +180,6 @@ public class SealUtils {
             lastX = x;
             lastY = y;
             num++;
-            //System.out.println("i: "+i + "  accArcLen:"+accArcLen);
         }
         double arcPer = accArcLen / fontTextLen;
         for (int i = 0; i < fontTextLen; i++) {
@@ -186,18 +188,14 @@ public class SealUtils {
             for (int p = 0; p < arcLenArr.length - 1; p++) {
                 if (arcLenArr[p] <= arcL && arcL <= arcLenArr[p + 1]) {
                     ang = (arcL >= ((arcLenArr[p] + arcLenArr[p + 1]) / 2.0)) ? angleArr[p + 1] : angleArr[p];
-                    //System.out.println("i: "+i+" p:"+p );
                     break;
                 }
             }
             angR = (ang * Math.PI / 180f);
-           // System.out.println("haha："+i + ": "+angR);
             Float x = radiusX * (float) Math.cos(angR) + radiusWidth;
             Float y = radiusY * (float) Math.sin(angR) + radiusHeight;
             double qxang = Math.atan2(radiusY * Math.cos(angR), -radiusX * Math.sin(angR));
             double fxang = qxang + Math.PI / 2.0;
-
-            //System.out.println("i:"+i + "----"+qxang+"-----"+fxang);
 
             int subIndex = isTop ? i : fontTextLen - 1 - i;
             String c = font.getFontText().substring(subIndex, subIndex + 1);
@@ -217,7 +215,6 @@ public class SealUtils {
                 x += w / 2f * (float) Math.cos(qxang);
                 y += w / 2f * (float) Math.sin(qxang);
             }
-            //System.out.println("i:"+i+"--x: "+x + "  y:"+y);
 
             // 旋转
             AffineTransform affineTransform = new AffineTransform();
@@ -225,11 +222,10 @@ public class SealUtils {
 
             if (isTop) {
                 affineTransform.rotate(Math.toRadians((fxang * 180.0 / Math.PI - 90)), 0, 0);
-                //System.out.println("i:"+i + " ---" +(Math.toRadians((fxang * 180.0 / Math.PI - 90))));
             }
-
-            else
+            else {
                 affineTransform.rotate(Math.toRadians((fxang * 180.0 / Math.PI + 180 - 90)), 0, 0);
+            }
             Font f2 = f.deriveFont(affineTransform);
             g2d.setFont(f2);
             g2d.drawString(c, x.intValue() + INIT_BEGIN, y.intValue() + INIT_BEGIN);
@@ -386,7 +382,7 @@ public class SealUtils {
      * @throws Exception 异常
      */
     public static String buildAndStoreSeal(SealConfiguration conf) throws Exception {
-        return  "data:image/png;base64,"+Base64.encodeBase64String(buildBytes(buildSeal(conf)));
+        return  "data:image/png;base64,"+Base64.getEncoder().encodeToString(buildBytes(buildSeal(conf)));
     }
     /**
      * 生成印章图片的byte数组
@@ -404,189 +400,4 @@ public class SealUtils {
             ImageIO.write(image, "png", outStream);
             return outStream.toByteArray();
         }
-
-    /**
-     * 绘制椭圆公章
-     * @param companyName 15字以内体验较佳多余15字 字体会变小
-     * @param colorEnum  红色 蓝色 蓝色
-     * @param fontEnum 宋体 方正黑体 楷体
-     * @param serNo 最少4位最多20位
-     * @param title 最多8位
-     * @return
-     * @throws Exception
-     */
-    public static String companyEllipseSeal(String companyName,ColorEnum colorEnum, FontEnum fontEnum,String serNo,String title) throws Exception {
-
-
-        SealConfiguration configuration = new SealConfiguration();
-        /**
-         * 主文字
-         */
-        SealFont mainFont = new SealFont();
-        mainFont.setBold(true);
-        mainFont.setFontFamily(fontEnum.getFont());
-        mainFont.setMarginSize(10);
-        /**************************************************/
-        mainFont.setFontText(companyName);
-        mainFont.setFontSize(25);
-        mainFont.setFontSpace(12.0);
-        if (companyName.length() > 14) {
-            mainFont.setFontSize(20);
-            mainFont.setFontSpace(8.0);
-        }
-
-
-        configuration.setMainFont(mainFont);
-
-        /**
-         * 副文字
-         */
-        if (serNo != null && !"".equals(serNo)) {
-            SealFont viceFont = new SealFont();
-            viceFont.setBold(true);
-            viceFont.setFontFamily(fontEnum.getFont());
-            viceFont.setMarginSize(5);
-            /**************************************************/
-            viceFont.setFontText(serNo);
-            viceFont.setFontSize(13);
-            viceFont.setFontSpace(12.0);
-            /***************************************************/
-
-            configuration.setViceFont(viceFont);
-        }
-
-
-        /**
-         * 抬头文字
-         */
-        if (title != null && !"".equals(title)) {
-            SealFont titleFont = new SealFont();
-            titleFont.setBold(true);
-            titleFont.setFontFamily(fontEnum.getFont());
-            titleFont.setFontSize(22);
-            if (companyName.length() > 14) {
-                titleFont.setFontSize(20);
-            }
-            /**************************************************/
-            titleFont.setFontText(title);
-            titleFont.setMarginSize(68);
-            titleFont.setMarginSize(27);
-
-            configuration.setTitleFont(titleFont);
-        }
-
-        /**
-         * 图片大小
-         */
-        configuration.setImageSize(300);
-        /**
-         * 背景颜色
-         */
-        configuration.setBackgroudColor(colorEnum.getColor());
-        /**
-         * 边线粗细、半径
-         */
-        configuration.setBorderCircle(new SealCircle(4, 140, 100));
-
-        return SealUtils.buildAndStoreSeal(configuration);
-
-    }
-
-    /**
-     * 绘制圆形公章
-     * @param companyName
-     * @param colorEnum
-     * @param fontEnum
-     * @param serNo
-     * @param title
-     * @return
-     * @throws Exception
-     */
-    public static String companyCircleSeal(String companyName,ColorEnum colorEnum, FontEnum fontEnum, String serNo, String title) throws Exception {
-
-        SealConfiguration configuration = new SealConfiguration();
-        /**
-         * 主文字
-         */
-        SealFont mainFont = new SealFont();
-        mainFont.setBold(true);
-        mainFont.setFontFamily(fontEnum.getFont());
-        mainFont.setMarginSize(5);
-        mainFont.setFontText(companyName);
-        mainFont.setFontSize(30);
-        mainFont.setFontSpace(30.0);
-        if (companyName.length() > 14) {
-            mainFont.setFontSize(23);
-            mainFont.setFontSpace(21.0);
-        }
-
-        configuration.setMainFont(mainFont);
-
-        /**
-         * 副文字
-         */
-        if (serNo != null && !"".equals(serNo)) {
-            SealFont viceFont = new SealFont();
-            viceFont.setFontFamily(fontEnum.getFont());
-            viceFont.setMarginSize(-5);
-            /**************************************************/
-            viceFont.setFontText(serNo);
-            viceFont.setBold(false);
-            viceFont.setFontSize(13);
-            viceFont.setFontSpace(10.0);
-            /**************************************************/
-
-            configuration.setViceFont(viceFont);
-        }
-
-        /**
-         * 中心文字
-         */
-        SealFont centerFont = new SealFont();
-        centerFont.setBold(false);
-        centerFont.setFontFamily(fontEnum.getFont());
-        centerFont.setFontText("★");
-        centerFont.setFontSize(70);
-
-        configuration.setCenterFont(centerFont);
-
-        /**
-         * 抬头文字
-         */
-        if (title != null && !"".equals(title)) {
-            SealFont titleFont = new SealFont();
-            titleFont.setBold(true);
-            titleFont.setFontFamily(fontEnum.getFont());
-            titleFont.setFontSize(20);
-            titleFont.setFontText(title);
-            titleFont.setMarginSize(70);
-
-            configuration.setTitleFont(titleFont);
-        }
-
-        /**
-         * 图片大小
-         */
-        configuration.setImageSize(250);
-        /**
-         * 背景颜色
-         */
-        configuration.setBackgroudColor(colorEnum.getColor());
-        /**
-         * 边线粗细、半径
-         */
-        configuration.setBorderCircle(new SealCircle(4, 115, 115));
-
-        return SealUtils.buildAndStoreSeal(configuration);
-    }
-
-//    public static void main(String[] args) {
-//        try {
-//            //System.out.println(companyEllipseSeal("浙江葫芦娃网络集团有限公司",1,2,"1234567899876","合同专用章"));
-//            System.out.println(companyEllipseSeal("浙江葫芦娃网络集团有限公司哈哈哈哈撒地方",ColorEnum.RED,FontEnum.SONGTI,"123456789987","合同专用章"));
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-
 }
