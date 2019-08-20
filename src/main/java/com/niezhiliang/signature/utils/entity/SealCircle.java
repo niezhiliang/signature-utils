@@ -1,18 +1,18 @@
 package com.niezhiliang.signature.utils.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 /**
  * @Description: 印章圆圈类
  * @Author Ran.chunlin
  * @Date: Created in 15:41 2018-10-04
  */
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class SealCircle {
-
-    public SealCircle(Integer lineSize, Integer width,Integer height) {
-        this.lineSize = lineSize;
-        this.width = width;
-        this.height = height;
-    }
-
     /**
      * 线宽度
      */
@@ -25,16 +25,4 @@ public class SealCircle {
      * 半径
      */
     private Integer height;
-
-    public Integer getLineSize() {
-        return lineSize;
-    }
-
-    public Integer getHeight() {
-        return height;
-    }
-
-    public Integer getWidth() {
-        return width;
-    }
 }

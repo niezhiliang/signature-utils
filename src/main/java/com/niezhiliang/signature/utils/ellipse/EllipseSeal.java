@@ -17,7 +17,6 @@ public class EllipseSeal extends BaseSeal {
 
     @Override
     public String createSeal(SealDTO sealDTO) throws Exception {
-        System.out.println("创建椭圆签章");
         SealConfiguration configuration = new SealConfiguration();
         /**
          * 主文字
