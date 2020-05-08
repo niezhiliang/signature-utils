@@ -350,7 +350,13 @@ public class SealUtils {
             float marginSize = font.getMarginSize() == null ?
                     (float) (circleHeight / 2 - rectangle2D.getCenterY()) :
                     (float) (circleHeight / 2 - rectangle2D.getCenterY()) + (float) font.getMarginSize();
-            g2d.drawString(font.getFontText(), (float) (circleWidth / 2 - rectangle2D.getCenterX() + 1), marginSize);
+            //g2d.drawString(font.getFontText(), 125 - 35, 125+35);
+            float x = (float) (circleWidth / 2 - rectangle2D.getCenterX());
+            //一个字符表示中间星 这里不减10会出现歪的现象
+            if (font.getFontText().length() == 1) {
+                x = (float) (circleWidth / 2 - rectangle2D.getCenterX() - INIT_BEGIN);
+            }
+            g2d.drawString(font.getFontText(), x, marginSize);
         }
     }
 

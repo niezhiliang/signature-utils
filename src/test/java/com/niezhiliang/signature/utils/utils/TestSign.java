@@ -6,6 +6,11 @@ import com.niezhiliang.signature.utils.ellipse.EllipseSealFactory;
 import com.niezhiliang.signature.utils.entity.SealDTO;
 import org.junit.Test;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.Base64;
+
 /**
  * @Author NieZhiLiang
  * @Email nzlsgg@163.com
@@ -23,7 +28,7 @@ public class TestSign {
         sealDTO.setColor(2);
         sealDTO.setFont(2);
         BaseSeal baseSeal =  new CircleSealFactory().getInstance();
-        System.out.println(baseSeal.createSeal(sealDTO));
+        Files.write(Paths.get("/Users/fxq/Desktop/signature-utils/imgs/1.png"), Base64.getDecoder().decode(baseSeal.createSeal(sealDTO).replace("data:image/png;base64,","")), StandardOpenOption.CREATE);
     }
 
     @Test
@@ -33,7 +38,7 @@ public class TestSign {
         sealDTO.setSerNo("123456789987");
         sealDTO.setTitle("财务专用章");
         BaseSeal baseSeal =  new EllipseSealFactory().getInstance();
-        System.out.println(baseSeal.createSeal(sealDTO));
+        Files.write(Paths.get("/Users/fxq/Desktop/signature-utils/imgs/2.png"), Base64.getDecoder().decode(baseSeal.createSeal(sealDTO).replace("data:image/png;base64,","")), StandardOpenOption.CREATE);
     }
 
 }
