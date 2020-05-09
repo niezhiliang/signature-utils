@@ -8,7 +8,7 @@
 <dependency>
     <groupId>com.niezhiliang.signature.utils</groupId>
     <artifactId>signature-utils</artifactId>
-    <version>2.0.0</version>
+    <version>2.0.1</version>
 </dependency>
 ```
 公章环境配置
