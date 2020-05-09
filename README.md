@@ -38,11 +38,11 @@ BaseSeal baseSeal =  new CircleSealFactory().getInstance();
 System.out.println(baseSeal.createSeal(sealDTO));
 ```
 
-![演示图片](https://github.com/niezhiliang/signature-utils/blob/master/imgs/%E9%BB%91%E4%BD%93.png)
+![演示图片](https://suyu-img.oss-cn-shenzhen.aliyuncs.com/%E9%BB%91%E4%BD%93.png)
 
-![演示图片](https://github.com/niezhiliang/signature-utils/blob/master/imgs/%E6%A5%B7%E4%BD%93.png)
+![演示图片](https://suyu-img.oss-cn-shenzhen.aliyuncs.com/%E6%A5%B7%E4%BD%93.png)
 
-![演示图片](https://github.com/niezhiliang/signature-utils/blob/master/imgs/%E6%96%B9%E6%AD%A3%E9%BB%91%E4%BD%93.png)
+![演示图片](https://suyu-img.oss-cn-shenzhen.aliyuncs.com/%E6%96%B9%E6%AD%A3%E9%BB%91%E4%BD%93.png)
 
 要是出现上面这种情况，字体全部都是框框，不用担心，这个是服务器环境不支持该字体，解决办法：
 在自己本地电脑上找到该字体，将其放在Java jre/lib/fonts的目录下 支持的三种字体我只找到其中两种放在项目的fonts目录下面 还有一个方正黑体没找到，方正黑体字体不是我想搞得，是该死的产品要求的字体，我没得办法啦。
@@ -71,7 +71,7 @@ sealDTO.setTitle("财务专用章");
 BaseSeal baseSeal =  new EllipseSealFactory().getInstance();
 System.out.println(baseSeal.createSeal(sealDTO));
 ```
-![演示图片](https://github.com/niezhiliang/signature-utils/blob/master/imgs/%E5%AE%8B%E4%BD%93.png)
+![演示图片](https://suyu-img.oss-cn-shenzhen.aliyuncs.com/%E5%AE%8B%E4%BD%93.png)
 
 
 
