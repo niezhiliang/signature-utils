@@ -5,6 +5,7 @@
 该项目已经发布到Maven中央仓库，使用只需要在pom文件中依赖就好
 
 ```xml
+linux 系统使用版本2.0.0签章五角星位置是正确的， mac 2.0.1五角星位置是正确的
 <dependency>
     <groupId>com.niezhiliang.signature.utils</groupId>
     <artifactId>signature-utils</artifactId>
